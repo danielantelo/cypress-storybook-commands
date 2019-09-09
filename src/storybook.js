@@ -1,3 +1,4 @@
+// Coming soon...
 module.exports = function addStoryBookWebCommands() {
   Cypress.Commands.add('getStories', () => {
 

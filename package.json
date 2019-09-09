@@ -3,6 +3,7 @@
   "version": "0.1.2",
   "description": "Commands to help navigate storybook in Cypress for functional and visual component level testing",
   "main": "src/index.js",
+  "repository": "https://github.com/danielantelo/cypress-storybook-commands",
   "author": "Daniel Antelo",
   "peerDependencies": {
     "cypress": "^3.0.0",

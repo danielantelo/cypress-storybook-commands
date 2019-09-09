@@ -56,3 +56,15 @@ context('Components: Accordion', () => {
 ```
 
 Note: `Accordion.default` is the testID set in the navigator for that story via the `data-testid` attribute.
+
+### Tags
+
+You can add certain # tags to story names to carry out certain actions:
+
+- `#vrs`: Visual Regression Skip, skip this story from visual regression tests. Useful for those story entries that may have animations or videos that can cause flaky automated visual tests.
+
+```
+storiesOf('MyComponent', module)
+  .add('default', () => <MyComponent />)
+  .add('animated #vrs', () => <MyComponent animated  />)
+```

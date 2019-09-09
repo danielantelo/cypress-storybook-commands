@@ -26,9 +26,13 @@ module.exports = function addStoryBookNativeCommands() {
       .openStorybookNavigator()
       .getStories()
       .each((story) => {
-        cy
-          .loadStory(story)
-          .matchesBaselineScreenshot(story.attr('data-testid'));
+        const name = story.attr('aria-label');
+        const isTaggedAsSkipped = name.includes('#vrs');
+        if (!isTaggedAsSkipped) {
+          cy
+            .loadStory(story)
+            .matchesBaselineScreenshot(name);
+        }
       });
   });
 }
