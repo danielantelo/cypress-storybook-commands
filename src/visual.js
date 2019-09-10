@@ -1,7 +1,6 @@
 const defaultViewportPresets = {
   mobile: 'iphone-6',
-  tablet: 'ipad-2',
-  desktop: 'macbook-15'
+  laptop: 'macbook-13'
 };
 
 module.exports = function addVisualSnapshotCommands({ viewportPresets = defaultViewportPresets, registerSnapshotCommands }) {
@@ -15,11 +14,11 @@ module.exports = function addVisualSnapshotCommands({ viewportPresets = defaultV
     });
   };
 
-  Cypress.Commands.add('matchesBaselineScreenshot', (name, { selector = 'body' } = {}) => {
+  Cypress.Commands.add('matchesBaselineScreenshot', (name, { wait, selector = 'body' } = {}) => {
     Object.keys(viewportPresets).forEach((current) => {
       const viewport = viewportPresets[current];
       cy.viewport(...(Array.isArray(viewport) ? viewport : [viewport]))
-        .wait(250) // avoid capturing resize flickers
+        .wait(wait || 250) // avoid capturing resize flickers
         .get(selector)
         .then(() => {
           cy.matchImageSnapshot(`${name}-${current}`);

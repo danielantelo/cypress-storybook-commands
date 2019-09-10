@@ -1,3 +1,6 @@
+const hasSkipTag = require('./utils/tags').hasSkipTag;
+const hasWaitTag = require('./utils/tags').hasWaitTag;
+
 module.exports = function addStoryBookNativeCommands() {
   Cypress.Commands.add('openStorybookNavigator', () => {
     return cy.get('.css-text-901oao').contains('NAVIGATOR').click();
@@ -16,7 +19,7 @@ module.exports = function addStoryBookNativeCommands() {
       .openStorybookNavigator()
       .get(story)
       .scrollIntoView()
-      .click()
+      .click({ force: true })
       .openStorybookPreview()
       .wait(100) // wait for animation to finish;
   });
@@ -27,11 +30,9 @@ module.exports = function addStoryBookNativeCommands() {
       .getStories()
       .each((story) => {
         const name = story.attr('aria-label');
-        const isTaggedAsSkipped = name.includes('#vrs');
-        if (!isTaggedAsSkipped) {
-          cy
-            .loadStory(story)
-            .matchesBaselineScreenshot(name);
+        if (!hasSkipTag(name)) {
+          const wait = hasWaitTag(name);
+          cy.loadStory(story).matchesBaselineScreenshot(name, { wait });
         }
       });
   });
