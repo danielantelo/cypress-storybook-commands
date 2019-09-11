@@ -21,6 +21,7 @@ addStoryBookCommands({
   registerSnapshotCommands: true // false if you already include cypress-image-snapshot/command
   preSnapshotFunc: () => { console.log('code before snapshot: hide elements, etc' )},
   postSnapshotFunc: () => { console.log('code after snapshot: reset elements, etc' )},
+  snapshotSelector: 'body' // selector of element to use for snapshots
 })
 
 ```

@@ -1,7 +1,7 @@
 const hasSkipTag = require('./utils/tags').hasSkipTag;
 const hasWaitTag = require('./utils/tags').hasWaitTag;
 
-module.exports = function addStoryBookNativeCommands({ preSnapshotFunc, postSnapshotFunc } = {}) {
+module.exports = function addStoryBookNativeCommands({ preSnapshotFunc, postSnapshotFunc, snapshotSelector } = {}) {
   Cypress.Commands.add('openStorybookNavigator', () => {
     return cy.get('.css-text-901oao').contains('NAVIGATOR').click();
   });
@@ -45,7 +45,7 @@ module.exports = function addStoryBookNativeCommands({ preSnapshotFunc, postSnap
           cy
             .loadStory(story)
             .prepareStoryForSnapshot()
-            .matchesBaselineScreenshot(name, { wait })
+            .matchesBaselineScreenshot(name, { wait, selector: snapshotSelector })
             .resetStoryAfterSnapshot();
         }
       });

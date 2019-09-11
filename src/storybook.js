@@ -1,7 +1,7 @@
 const hasSkipTag = require('./utils/tags').hasSkipTag;
 const hasWaitTag = require('./utils/tags').hasWaitTag;
 
-module.exports = function addStoryBookWebCommands({ preSnapshotFunc, postSnapshotFunc } = {}) {
+module.exports = function addStoryBookWebCommands({ preSnapshotFunc, postSnapshotFunc, snapshotSelector } = {}) {
   Cypress.Commands.add('expandAll', () => {
     let didExpand = false;
     return cy
@@ -53,7 +53,7 @@ module.exports = function addStoryBookWebCommands({ preSnapshotFunc, postSnapsho
           cy
             .loadStory(storyId)
             .prepareStoryForSnapshot()
-            .matchesBaselineScreenshot(storyId, { wait })
+            .matchesBaselineScreenshot(storyId, { wait, selector: snapshotSelector })
             .resetStoryAfterSnapshot();
         }
       });
