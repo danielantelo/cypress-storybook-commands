@@ -10,4 +10,5 @@ Update `cypress.json` with the relevant storybook barse url.
 
 ## Native
 
-- Simple: 
+Boot up the sandbox react-native expo app using `yarn storybook` and point the baseUrl in `cypress.json` to `http://localhost:19006`
+
