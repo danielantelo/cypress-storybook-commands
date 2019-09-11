@@ -1,7 +1,7 @@
 const hasSkipTag = require('./utils/tags').hasSkipTag;
 const hasWaitTag = require('./utils/tags').hasWaitTag;
 
-module.exports = function addStoryBookWebCommands() {
+module.exports = function addStoryBookWebCommands({ preSnapshotFunc, postSnapshotFunc } = {}) {
   Cypress.Commands.add('expandAll', () => {
     let didExpand = false;
     return cy
@@ -34,6 +34,14 @@ module.exports = function addStoryBookWebCommands() {
     return cy.visit(`/iframe.html?id=${id}`);
   });
 
+  Cypress.Commands.add('prepareStoryForSnapshot', () => {
+    preSnapshotFunc && preSnapshotFunc();
+  });
+
+  Cypress.Commands.add('resetStoryAfterSnapshot', () => {
+    postSnapshotFunc && postSnapshotFunc();
+  });
+
   Cypress.Commands.add('runStorybookVisualRegression', () => {
     return cy
       .getStories()
@@ -42,7 +50,11 @@ module.exports = function addStoryBookWebCommands() {
         if (!hasSkipTag(name)) {
           const wait = hasWaitTag(name);
           const storyId = story.attr('id').replace(/^(explorer)/, '');
-          cy.loadStory(storyId).matchesBaselineScreenshot(storyId, { wait });
+          cy
+            .loadStory(storyId)
+            .prepareStoryForSnapshot()
+            .matchesBaselineScreenshot(storyId, { wait })
+            .resetStoryAfterSnapshot();
         }
       });
   });

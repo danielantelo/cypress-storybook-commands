@@ -1,0 +1,11 @@
+{
+  "name": "sandbox",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "@storybook/react-native": "^5.2.0",
+    "cypress": "^3.0.0",
+    "cypress-image-snapshot": "^3.1.1",
+    "storybook": "^5.1.11"
+  }
+}

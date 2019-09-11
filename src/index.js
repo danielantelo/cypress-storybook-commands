@@ -6,16 +6,18 @@ module.exports = function addStoryBookCommands({
   version = 5,
   platform = 'web',
   viewportPresets,
-  registerSnapshotCommands = true
-}) {
+  registerSnapshotCommands = true,
+  preSnapshotFunc,
+  postSnapshotFunc,
+} = {}) {
   addVisualSnapshotCommands({ viewportPresets, registerSnapshotCommands });
 
   switch (platform) {
     case 'web':
-      addStoryBookWebCommands();
+      addStoryBookWebCommands({ preSnapshotFunc, postSnapshotFunc });
       break;
     case 'native':
-      addStoryBookNativeCommands();
+      addStoryBookNativeCommands({ preSnapshotFunc, postSnapshotFunc });
       break;
   }
 };

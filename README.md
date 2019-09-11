@@ -16,9 +16,11 @@ addStoryBookCommands({
     mobile: 'iphone-6',
     tablet: 'ipad-2',
     laptop: 'macbook-13',
-    desktop: [1920, 1080]
+    desktop: [1920, 1080],
   },
-  registerSnapshotCommands: true // set to false if you already include cypress-image-snapshot/command in your setup
+  registerSnapshotCommands: true // false if you already include cypress-image-snapshot/command
+  preSnapshotFunc: () => { console.log('code before snapshot: hide elements, etc' )},
+  postSnapshotFunc: () => { console.log('code after snapshot: reset elements, etc' )},
 })
 
 ```

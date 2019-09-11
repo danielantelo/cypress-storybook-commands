@@ -1,1 +1,5 @@
 node_modules
+sandbox/node_modules
+sandbox/cypress/screenshots
+sandbox/cypress/snapshots
+sandbox/yarn.lock

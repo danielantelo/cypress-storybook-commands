@@ -1,7 +1,7 @@
 const hasSkipTag = require('./utils/tags').hasSkipTag;
 const hasWaitTag = require('./utils/tags').hasWaitTag;
 
-module.exports = function addStoryBookNativeCommands() {
+module.exports = function addStoryBookNativeCommands({ preSnapshotFunc, postSnapshotFunc } = {}) {
   Cypress.Commands.add('openStorybookNavigator', () => {
     return cy.get('.css-text-901oao').contains('NAVIGATOR').click();
   });
@@ -21,7 +21,17 @@ module.exports = function addStoryBookNativeCommands() {
       .scrollIntoView()
       .click({ force: true })
       .openStorybookPreview()
-      .wait(100) // wait for animation to finish;
+      .wait(100); // wait for animation to finish;
+  });
+
+  Cypress.Commands.add('prepareStoryForSnapshot', () => {
+    preSnapshotFunc && preSnapshotFunc();
+    return cy.get('[data-testid="Storybook.OnDeviceUI.toggleUI"]').click().invoke('css', 'display', 'none');
+  });
+
+  Cypress.Commands.add('resetStoryAfterSnapshot', () => {
+    postSnapshotFunc && postSnapshotFunc();
+    return cy.get('[data-testid="Storybook.OnDeviceUI.toggleUI"]').invoke('css', 'display', 'block').click();
   });
 
   Cypress.Commands.add('runStorybookVisualRegression', () => {
@@ -32,7 +42,11 @@ module.exports = function addStoryBookNativeCommands() {
         const name = story.attr('aria-label');
         if (!hasSkipTag(name)) {
           const wait = hasWaitTag(name);
-          cy.loadStory(story).matchesBaselineScreenshot(name, { wait });
+          cy
+            .loadStory(story)
+            .prepareStoryForSnapshot()
+            .matchesBaselineScreenshot(name, { wait })
+            .resetStoryAfterSnapshot();
         }
       });
   });
