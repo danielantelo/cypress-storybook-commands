@@ -1,6 +1,6 @@
 {
   "name": "cypress-storybook-commands",
-  "version": "0.1.9",
+  "version": "0.1.11",
   "description": "Commands to help navigate storybook in Cypress for functional and visual component level testing",
   "main": "src/index.js",
   "repository": "https://github.com/danielantelo/cypress-storybook-commands",

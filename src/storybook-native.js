@@ -42,10 +42,11 @@ module.exports = function addStoryBookNativeCommands({ preSnapshotFunc, postSnap
         const name = story.attr('aria-label');
         if (!hasSkipTag(name)) {
           const wait = hasWaitTag(name);
+          const id = story.attr('data-testid').replace('Storybook.ListItem.', '');
           cy
             .loadStory(story)
             .prepareStoryForSnapshot()
-            .matchesBaselineScreenshot(name, { wait, selector: snapshotSelector })
+            .matchesBaselineScreenshot(id, { wait, selector: snapshotSelector })
             .resetStoryAfterSnapshot();
         }
       });
