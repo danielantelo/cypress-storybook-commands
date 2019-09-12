@@ -3,11 +3,11 @@ const hasWaitTag = require('./utils/tags').hasWaitTag;
 
 module.exports = function addStoryBookNativeCommands({ preSnapshotFunc, postSnapshotFunc, snapshotSelector } = {}) {
   Cypress.Commands.add('openStorybookNavigator', () => {
-    return cy.get('.css-text-901oao').contains('NAVIGATOR').click();
+    return cy.get('div').contains('NAVIGATOR').click();
   });
 
   Cypress.Commands.add('openStorybookPreview', () => {
-    return cy.get('.css-text-901oao').contains('PREVIEW').click();
+    return cy.get('div').contains('PREVIEW').click();
   });
 
   Cypress.Commands.add('getStories', () => {
