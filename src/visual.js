@@ -1,6 +1,6 @@
 const defaultViewportPresets = {
   mobile: 'iphone-6',
-  laptop: 'macbook-13'
+  desktop: 'macbook-15'
 };
 
 module.exports = function addVisualSnapshotCommands({ viewportPresets = defaultViewportPresets, registerSnapshotCommands }) {
