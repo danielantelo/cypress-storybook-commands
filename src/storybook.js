@@ -5,7 +5,7 @@ module.exports = function addStoryBookWebCommands({ preSnapshotFunc, postSnapsho
   Cypress.Commands.add('expandAll', () => {
     let didExpand = false;
     return cy
-      .get('a[id^=explorer]:not([href])')
+      .get('a[id^=explorer]:not([id*=--])')
       .each(story => {
         const isExpanded = story.parent().find(`#${story.attr('id')} + .css-0`).length > 0;
         if (!isExpanded) {
@@ -26,7 +26,7 @@ module.exports = function addStoryBookWebCommands({ preSnapshotFunc, postSnapsho
     return cy
       .expandAll()
       .then(() => {
-        return cy.get('a[id^=explorer][href]')
+        return cy.get('a[id^=explorer][href][id*=--]')
       });
   })
 
