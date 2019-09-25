@@ -3,11 +3,17 @@ const hasWaitTag = require('./utils/tags').hasWaitTag;
 
 module.exports = function addStoryBookNativeCommands({ preSnapshotFunc, postSnapshotFunc, snapshotSelector } = {}) {
   Cypress.Commands.add('openStorybookNavigator', () => {
-    return cy.get('div').contains('NAVIGATOR').click();
+    return cy.get('div')
+    .contains('NAVIGATOR')
+    .click()
+    .wait(100) // wait for animation to finish;
   });
 
   Cypress.Commands.add('openStorybookPreview', () => {
-    return cy.get('div').contains('PREVIEW').click();
+    return cy.get('div')
+      .contains('PREVIEW')
+      .click()
+      .wait(100); // wait for animation to finish
   });
 
   Cypress.Commands.add('getStories', () => {
@@ -20,8 +26,7 @@ module.exports = function addStoryBookNativeCommands({ preSnapshotFunc, postSnap
       .get(story)
       .scrollIntoView()
       .click({ force: true })
-      .openStorybookPreview()
-      .wait(100); // wait for animation to finish;
+      .openStorybookPreview();
   });
 
   Cypress.Commands.add('prepareStoryForSnapshot', () => {
