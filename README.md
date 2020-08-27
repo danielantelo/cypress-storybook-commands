@@ -6,7 +6,7 @@ This package registers a set of cypress commands that will allow you to test com
 
 In your `cypress/support/commands.js` add the following:
 
-```
+```js
 import addStoryBookCommands from 'cypress-storybook-commands';
 
 addStoryBookCommands({
@@ -32,7 +32,7 @@ Note: update platform accordingly for the type of storybook you are using, defau
 
 You must include the `cypress-image-snapshot` plugin in `cypress/plugins/index.js`
 
-```
+```js
 const { addMatchImageSnapshotPlugin } = require('cypress-image-snapshot/plugin')
 
 module.exports = (on, config) => {
@@ -44,7 +44,7 @@ module.exports = (on, config) => {
 
 In your test file e.g. `cypress/tests/components/visual-regression.js` you can simply:
 
-```
+```js
 context('Components', () => {
   it('render components as expected', () => {
     cy.visit('/')
@@ -57,7 +57,7 @@ context('Components', () => {
 
 In your test file e.g. `cypress/tests/components/accordion.js` you can load the story to carry out functional testing as follows:
 
-```
+```js
 context('Components: Accordion', () => {
   beforeEach(() => {
     cy.visit('/')
@@ -81,7 +81,7 @@ You can add certain # tags to story names to carry out certain actions:
 
 - `#vrw2`: Visual Regression Wait, add a wait after story loads. Useful for those story entries that have animations on load. The number after the vrw is the number of seconds to wait. 
 
-```
+```js
 storiesOf('MyComponent', module)
   .add('default', () => <MyComponent />)
   .add('video #vrs', () => <MyComponent video  />)
