@@ -1,12 +1,19 @@
 {
-  "name": "cypress-storybook-commands",
-  "version": "0.1.13",
-  "description": "Commands to help navigate storybook in Cypress for functional and visual component level testing",
-  "main": "src/index.js",
-  "repository": "https://github.com/danielantelo/cypress-storybook-commands",
+  "name": "root",
+  "packageManager": "yarn@3.2.1",
   "author": "Daniel Antelo",
-  "peerDependencies": {
-    "cypress": "^3.0.0",
-    "cypress-image-snapshot": "^3.1.1"
+  "engines": {
+    "node": "^16",
+    "npm": "please-use-yarn",
+    "yarn": ">=3.2"
+  },
+  "workspaces": [
+    "sandbox/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "cypress": "yarn workspace cypress run cy:storybook",
+    "storybook": "yarn workspace storybook run storybook",
+    "storybook-native": "npx http-server sandbox/storybook-native -p 19006"
   }
 }

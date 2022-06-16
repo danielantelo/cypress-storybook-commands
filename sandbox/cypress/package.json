@@ -1,0 +1,11 @@
+{
+  "name": "cypress",
+  "version": "1.0.0",
+  "dependencies": {
+    "cypress": "^10.1.0"
+  },
+  "scripts": {
+    "cy:storybook": "cypress open --e2e --config baseUrl=http://localhost:19006,specPattern='cypress/storybook/*'",
+    "cy:storybook:headless": "cypress open --e2e --browser chrome --headless --config baseUrl=http://localhost:6006/,specPattern='cypress/storybook/*'"
+  }
+}

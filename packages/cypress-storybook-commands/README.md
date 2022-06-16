@@ -2,21 +2,11 @@
 
 This package registers a set of cypress commands that will allow you to test components in storybook visually and functionally.
 
-Now supports projects using cypress 10 and Storybook 6.
+Now for projects using cypress 10 and Storybook 6. (For storybook 5 projects use version 0.1.13)
 
 ## Installation
 
-```
-yarn add cypress-storybook-commands --dev
-```
-
-or
-
-```
-npm i cypress-storybook-commands --dev
-```
-
-### Setup
+### Pre-requisites
 
 You must include the `cypress-image-snapshot` plugin in `cypress/plugins/index.js` (create the folder and file if not there)
 
@@ -42,7 +32,7 @@ module.exports = defineConfig({
 });
 ```
 
-#### Add the commands
+### Add the commands
 
 In your `cypress/support/commands.js` add the following:
 
@@ -50,9 +40,9 @@ In your `cypress/support/commands.js` add the following:
 import addStoryBookCommands from 'cypress-storybook-commands';
 
 addStoryBookCommands({
-  version: 6, // currently compatible with version 5 and 6 of storybook, and native
+  platform: 'web', // set to native if using storybook-native
   viewportPresets: { // see https://docs.cypress.io/api/commands/viewport.html#Arguments
-    mobile: 'iphone-x',
+    mobile: 'iphone-6',
     tablet: 'ipad-2',
     laptop: 'macbook-13',
     desktop: [1920, 1080],
@@ -65,7 +55,10 @@ addStoryBookCommands({
 
 ```
 
-#### Add the run scripts
+Note: update platform accordingly for the type of storybook you are using, default is `web`, the alternative is `native`
+
+
+### Add the run scripts
 
 In your `cypress/package.json` add a new script for storybook tests:
 
