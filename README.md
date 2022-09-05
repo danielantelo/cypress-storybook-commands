@@ -90,7 +90,7 @@ In your test file e.g. `cypress/storybook/visual-regression.cy.js` you can simpl
 context('Storybook', () => {
   it('render components as expected', () => {
     cy.visit('http://localhost:6006/')
-      .runStorybookVisualRegression();
+      .runStorybookVisualRegression({storiesToSkip: []});
   });
 });
 ```
