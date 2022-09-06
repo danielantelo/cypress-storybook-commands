@@ -1,7 +1,7 @@
 import addStoryBookCommands from '../../../../packages/cypress-storybook-commands';
 
 addStoryBookCommands({
-  version: 'native', // currently only Storybook 5 is supported
+  version: 6,
   viewportPresets: {
     // see https://docs.cypress.io/api/commands/viewport.html#Arguments
     mobile: 'iphone-x',
@@ -14,5 +14,4 @@ addStoryBookCommands({
   postSnapshotFunc: () => {
     console.log('code after snapshot: reset elements, etc');
   },
-  snapshotSelector: 'body', // selector of element to use for snapshots
 });

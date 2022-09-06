@@ -12,7 +12,8 @@
     "packages/*"
   ],
   "scripts": {
-    "cypress": "yarn workspace cypress run cy:storybook",
+    "cy": "yarn workspace cypress run cy:storybook",
+    "cy:headless": "yarn workspace cypress run cy:storybook:headless",
     "storybook": "yarn workspace storybook run storybook",
     "storybook-native": "npx http-server sandbox/storybook-native -p 19006"
   }

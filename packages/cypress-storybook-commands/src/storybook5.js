@@ -12,7 +12,8 @@ module.exports = function addStorybook5Commands({
       .each((story) => {
         const isExpanded = story.parent().find(`#${story.attr('id')} + .css-0`).length > 0;
         if (!isExpanded) {
-          cy.get(story).scrollIntoView().click({ force: true });
+          cy.get(story)
+            .click({ force: true });
           didExpand = true;
         }
       })

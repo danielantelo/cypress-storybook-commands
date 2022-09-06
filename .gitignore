@@ -1,6 +1,7 @@
 node_modules
 sandbox/**/screenshots
 sandbox/**/snapshots
+sandbox/**/videos
 
 /.yarn/*
 !/.yarn/patches

@@ -4,12 +4,12 @@ const addStoryBookNativeCommands = require('./storybook-native');
 const addVisualSnapshotCommands = require('./visual');
 
 module.exports = function addStoryBookCommands({
-  version = 5,
+  version = 6,
   viewportPresets,
   registerSnapshotCommands = true,
   preSnapshotFunc,
   postSnapshotFunc,
-  snapshotSelector = 'body',
+  snapshotSelector = '#root',
 } = {}) {
   addVisualSnapshotCommands({ viewportPresets, registerSnapshotCommands });
 
