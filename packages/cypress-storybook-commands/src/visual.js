@@ -23,17 +23,14 @@ module.exports = function addVisualSnapshotCommands({
     cy.get(selector)
       .children()
       .should('have.length.greaterThan', 0) // should wait until children of wanted container are loaded
-      .invoke('css', 'height')
-      .then((height) => {
-        if (parseInt(height) > 0) { // ignores empty stories
-          Object.keys(viewportPresets).forEach((current) => {
-            const viewport = viewportPresets[current];
-            cy.viewport(...(Array.isArray(viewport) ? viewport : [viewport]))
-              .wait(wait) // avoids capturing resize flickers or animations
-              .get(selector)
-              .matchImageSnapshot(`${name}-${current}`);
-          });
-        }
+      .then(() => {
+        Object.keys(viewportPresets).forEach((current) => {
+          const viewport = viewportPresets[current];
+          cy.viewport(...(Array.isArray(viewport) ? viewport : [viewport]))
+            .wait(wait) // avoids capturing resize flickers or animations
+            .get(selector)
+            .matchImageSnapshot(`${name}-${current}`);
+        });
       });
   });
 };
