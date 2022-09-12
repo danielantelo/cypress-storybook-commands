@@ -19,7 +19,7 @@ module.exports = function addVisualSnapshotCommands({
       });
   }
 
-  Cypress.Commands.add('matchesStorybookScreenshot', (name, { wait = 400, selector } = {}) => {
+  Cypress.Commands.add('matchesStorybookScreenshot', (name, { wait = 250, selector } = {}) => {
     cy.get(selector)
       .children()
       .should('have.length.greaterThan', 0) // should wait until children of wanted container are loaded
