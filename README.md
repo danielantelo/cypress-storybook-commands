@@ -141,6 +141,52 @@ npx start-server-and-test "$APPCMD" 9002 "$CYPRESSCMD"
 
 Note the use of `--env requireSnapshots=true` so that any missing snapshots in the branch cause a CI fail.
 
+#### Parallelism 
+
+If you are using storybook 6+ we can make use of the `/stories.json` endpoint to get and split all the stories in the storybook instance.
+
+This means you can pass a comma separated list of stories to include in the parallel instance (injected via the environment):
+
+```js
+context('Storybook', () => {
+  it('render components as expected', () => {
+    cy.visit('/')
+      .runStorybookVisualRegression({
+        storyList: Cypress.env('storyList') || null,
+        storiesToSkip: []
+      });
+  });
+});
+```
+
+Your CI to run different set of stories in parallel could look something like:
+
+```yml
+  visual-regression-storybook:
+    docker:
+      - image: cypress/included:10.7.0
+    parallelism: 3
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Run Cypress on Storybook
+          command: |
+            npx serve@13 --listen 9002 --single ../../devtools/storybook/dist
+            npx wait-on http://localhost:9002/stories.json \
+              && node -e "require('request')('http://localhost:9002/stories.json', {json: true}, (e, res) => console.log(Object.keys(res.body.stories)).join(\"\n\"))" > stories.json
+            npx wait-on stories.json \
+              && TESTS=$(cat stories.json | circleci tests split) \
+              && yarn cy:storybook:headless --env requireSnapshots=true,storyList=${TESTS//$'\n'/','}
+      - store_artifacts:
+          path: devtools/cypress/cypress/snapshots
+          destination: snapshots
+      - store_artifacts:
+          path: stories.json
+          destination: stories.json 
+
+```
+
 
 ## Minimising Cross OS visual differences
 
