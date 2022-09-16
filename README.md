@@ -172,12 +172,11 @@ Your CI to run different set of stories in parallel could look something like:
       - run:
           name: Run Cypress on Storybook
           command: |
-            npx serve@13 --listen 9002 --single ../../devtools/storybook/dist
-            npx wait-on http://localhost:9002/stories.json \
-              && node -e "require('request')('http://localhost:9002/stories.json', {json: true}, (e, res) => console.log(Object.keys(res.body.stories)).join(\"\n\"))" > stories.json
-            npx wait-on stories.json \
-              && TESTS=$(cat stories.json | circleci tests split) \
-              && yarn cy:storybook:headless --env requireSnapshots=true,storyList=${TESTS//$'\n'/','}
+            FULLSTORYLIST=$(node -e "console.log(Object.keys(require('./devtools/storybook/dist/stories.json').stories).join('\n'))")
+            TESTS=$(echo $FULLSTORYLIST | circleci tests split)
+            APPCMD="npx http-server -p 3000 ./devtools/storybook/dist"
+            CYPRESSCMD="yarn cy:storybook:headless --env requireSnapshots=true,storyList=${TESTS// /,}"
+            #npx start-server-and-test "$APPCMD" 3000 "$CYPRESSCMD"
       - store_artifacts:
           path: devtools/cypress/cypress/snapshots
           destination: snapshots
