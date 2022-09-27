@@ -42,17 +42,12 @@ module.exports = function addStorybook6Commands({
         });
       }
 
-      return cy
-        .url()
-        .should('include', '?path=/story/') // wait for storybook to load initial default story
-        .then(() => {
-          if (storyList) {
-            // we allow passing in a storylist for parallel runs in CI
-            runVisualRegression(storyList.split(','));
-          } else {
-            cy.getStories().then(runVisualRegression);
-          }
-        });
+      if (storyList) {
+        // we allow passing in a storylist for parallel runs in CI
+        runVisualRegression(storyList.split(','));
+      } else {
+        cy.getStories().then(runVisualRegression);
+      }
     }
   );
 };
