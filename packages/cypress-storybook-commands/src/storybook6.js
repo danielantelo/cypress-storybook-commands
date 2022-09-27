@@ -25,19 +25,23 @@ module.exports = function addStorybook6Commands({
 
   Cypress.Commands.add(
     'runStorybookVisualRegression',
-    ({ storiesToSkip = [], storyWaits = {}, storyList = null }) => {
+    ({ storiesToSkip = [], storyWaits = {}, storyActions = {}, storyList = null }) => {
       function runVisualRegression(stories) {
         stories.forEach((storyId) => {
           const [skipStory] = storyInList(storyId, storiesToSkip);
           const [hasCustomWait, customWaitMatch] = storyInList(storyId, Object.keys(storyWaits));
+          const [hasPreSnapshotAction, preSnapshotActionMatch] = storyInList(storyId, Object.keys(storyActions));
           if (!skipStory) {
-            cy.loadStory(storyId)
-              .prepareStoryForSnapshot()
-              .matchesStorybookScreenshot(storyId, {
-                selector: snapshotSelector,
-                ...(hasCustomWait ? { wait: storyWaits[customWaitMatch] } : {}),
-              })
-              .resetStoryAfterSnapshot();
+            cy.loadStory(storyId).prepareStoryForSnapshot();
+
+            if (hasPreSnapshotAction) {
+              storyActions[preSnapshotActionMatch]();
+            }
+            
+            cy.matchesStorybookScreenshot(storyId, {
+              selector: hasPreSnapshotAction ? 'body' : snapshotSelector,
+              ...(hasCustomWait ? { wait: storyWaits[customWaitMatch] } : {}),
+            }).resetStoryAfterSnapshot();
           }
         });
       }

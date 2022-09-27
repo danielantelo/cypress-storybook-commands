@@ -12,8 +12,7 @@ module.exports = function addStorybook5Commands({
       .each((story) => {
         const isExpanded = story.parent().find(`#${story.attr('id')} + .css-0`).length > 0;
         if (!isExpanded) {
-          cy.get(story)
-            .click({ force: true });
+          cy.get(story).click({ force: true });
           didExpand = true;
         }
       })
@@ -50,14 +49,21 @@ module.exports = function addStorybook5Commands({
         const storyId = story.attr('id').replace(/^(explorer)/, '');
         const [skipStory] = storyInList(storyId, storiesToSkip);
         const [hasCustomWait, customWaitMatch] = storyInList(storyId, Object.keys(storyWaits));
+        const [hasPreSnapshotAction, preSnapshotActionMatch] = storyInList(
+          storyId,
+          Object.keys(storyActions)
+        );
         if (!skipStory) {
-          cy.loadStory(storyId)
-            .prepareStoryForSnapshot()
-            .matchesStorybookScreenshot(storyId, {
-              selector: snapshotSelector,
-              ...(hasCustomWait ? { wait: storyWaits[customWaitMatch] } : {}),
-            })
-            .resetStoryAfterSnapshot();
+          cy.loadStory(storyId).prepareStoryForSnapshot();
+
+          if (hasPreSnapshotAction) {
+            storyActions[preSnapshotActionMatch]();
+          }
+
+          cy.matchesStorybookScreenshot(storyId, {
+            selector: snapshotSelector,
+            ...(hasCustomWait ? { wait: storyWaits[customWaitMatch] } : {}),
+          }).resetStoryAfterSnapshot();
         }
       });
   });

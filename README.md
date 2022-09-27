@@ -97,13 +97,20 @@ context('Storybook', () => {
 
 this will iterate over all the stories and capture visual snapshots.
 
-Note: `runStorybookVisualRegression` has optional settings `storiesToSkip` and `storyWaits`. You can use full story ids or story prefixes e.g. `accordion--primary` or `accordion--`
+Note: `runStorybookVisualRegression` has optional settings `storiesToSkip`, `storyWaits` and `storyActions`. You can use full story ids or story prefixes e.g. `accordion--primary` or `accordion--`
 
 ```js
 cy.visit('/')
   .runStorybookVisualRegression({
-    storiesToSkip: ['button-disabled'], // array of story ids or prefixes (found in url of story or the data-item-id in the nav)
-    storyWaits: {'chart--': 1000} // map of story ids or prefixes to wait times in ms for stories that require a wait after load (e.g. avoid capturing snapshots mid animation, etc));
+    // array of story ids or prefixes (found in url of story or the data-item-id in the nav)
+    storiesToSkip: ['button-disabled'],
+    // map of story matches to wait times in ms before screenshot (e.g. avoid capturing snapshots mid animation, etc));
+    storyWaits: {'chart--': 1000}
+    // map of story matches to actions to execute before screenshot
+    storyActions: {
+        'core-dialog': () => cy.contains('Open dialog').click(),
+        'core-modal': () => cy.contains('Open Modal').click(),
+      },
   });
 ```
 
