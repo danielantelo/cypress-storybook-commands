@@ -193,6 +193,25 @@ Your CI to run different set of stories in parallel could look something like:
 
 ```
 
+#### Advance usage
+
+Composition and splitting of stories in cy tests). You can get and filter stories as follows:
+
+```js
+  const storiesWithLoopingAnimations = ['loading', 'zerostate'];
+
+  const storyList = (stories, filter) => stories.filter(filter).join(',');
+
+  it('renders forms as expected', () => {
+    cy.getStories().then((stories) => {
+      cy.runStorybookVisualRegression({
+        storyList: storyList(stories, (storyId) => storyId.includes('forms-')),
+        storiesToSkip: [...storiesWithLoopingAnimations, 'forms-somestory-to-skip'],
+      });
+    });
+  });
+```
+
 
 ## Minimising Cross OS visual differences
 
