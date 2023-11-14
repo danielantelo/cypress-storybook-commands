@@ -2,7 +2,7 @@
   "name": "cypress",
   "version": "1.0.0",
   "dependencies": {
-    "cypress": "^10.1.0"
+    "cypress": "^13.5.0"
   },
   "scripts": {
     "cy:storybook": "cypress open --e2e --config baseUrl=http://localhost:9002,specPattern='cypress/storybook/*'",

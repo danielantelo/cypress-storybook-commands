@@ -24,6 +24,12 @@ module.exports = (on, config) => {
 
       // Force font rendering - should reduce differences in diffs between MacOS and Linux (CI)
       args.push('--font-render-hinting=none');
+
+      // Force overlay scrollbars - more consistent between mac and linux
+      args.push('--enable-features=OverlayScrollbar');
+
+      // helps with flaky animations
+      args.push('--force-prefers-reduced-motion');
     }
 
     return launchOptions;

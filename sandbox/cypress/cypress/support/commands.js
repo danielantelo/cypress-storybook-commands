@@ -1,7 +1,7 @@
 import addStoryBookCommands from '../../../../packages/cypress-storybook-commands';
 
 addStoryBookCommands({
-  version: 6,
+  version: 7,
   viewportPresets: {
     // see https://docs.cypress.io/api/commands/viewport.html#Arguments
     mobile: 'iphone-x',

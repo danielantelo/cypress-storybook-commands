@@ -1,24 +1,31 @@
-const addStorybook6Commands = require('./storybook6');
+const addStorybookCommands = require('./storybook');
 const addStorybook5Commands = require('./storybook5');
 const addStoryBookNativeCommands = require('./storybook-native');
 const addVisualSnapshotCommands = require('./visual');
 
 module.exports = function addStoryBookCommands({
-  version = 6,
+  version = 7,
   viewportPresets,
   registerSnapshotCommands = true,
   preSnapshotFunc,
   postSnapshotFunc,
-  snapshotSelector = '#root',
+  snapshotSelector,
 } = {}) {
   addVisualSnapshotCommands({ viewportPresets, registerSnapshotCommands });
 
   switch (String(version)) {
-    case '6':
-      addStorybook6Commands({
+    case '7':
+      addStorybookCommands({
         preSnapshotFunc,
         postSnapshotFunc,
-        snapshotSelector,
+        snapshotSelector: snapshotSelector || '#storybook-root',
+      });
+      break;
+    case '6':
+      addStorybookCommands({
+        preSnapshotFunc,
+        postSnapshotFunc,
+        snapshotSelector: snapshotSelector || '#root',
       });
       break;
     case '5':

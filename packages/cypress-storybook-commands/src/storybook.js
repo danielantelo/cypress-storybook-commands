@@ -1,13 +1,14 @@
 const { storyInList } = require('./utils');
 
-module.exports = function addStorybook6Commands({
+module.exports = function addStorybookCommands({
   preSnapshotFunc,
   postSnapshotFunc,
-  snapshotSelector,
+  snapshotSelector = '#root',
 } = {}) {
   Cypress.Commands.add('getStories', () => {
     return cy.request('/stories.json').then((response) => {
-      return Object.keys(response.body.stories);
+      // Docs appear as separate stories - we don't want to snapshot them
+      return Object.keys(response.body.stories).filter((storyId) => !storyId.endsWith('--docs'));
     });
   });
 
