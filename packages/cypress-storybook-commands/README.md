@@ -50,7 +50,7 @@ In your `cypress/support/commands.js` add the following:
 import addStoryBookCommands from 'cypress-storybook-commands';
 
 addStoryBookCommands({
-  version: 6, // currently compatible with version 5 and 6 of storybook, and native
+  version: 6, // currently compatible with version 5, 6 and 7 of storybook
   viewportPresets: { // see https://docs.cypress.io/api/commands/viewport.html#Arguments
     mobile: 'iphone-x',
     tablet: 'ipad-2',
@@ -255,4 +255,16 @@ module.exports = (on, config) => {
     return launchOptions;
   });
 }
+```
+
+## If you are getting Observer errors
+
+Some instances of storybook are throwing some console errors that are stopping cypress from running, you can override that by adding the below into `support/commands.js` or `support/e2e.js`:
+
+```js
+Cypress.on('uncaught:exception', (err, runnable) => {
+  // returning false here prevents Cypress from
+  // failing the test
+  return false;
+});
 ```
