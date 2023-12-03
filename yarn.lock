@@ -5026,7 +5026,7 @@ __metadata:
   dependencies:
     cypress-image-snapshot: ^4.0.1
   peerDependencies:
-    cypress: ^10.0.0
+    cypress: ">=10.0.0"
   languageName: unknown
   linkType: soft
 
