@@ -12,7 +12,7 @@ module.exports = function addVisualSnapshotCommands({
       require('cypress-image-snapshot/command').addMatchImageSnapshotCommand;
     registerSnapshotCommands &&
       addMatchImageSnapshotCommand({
-        failureThreshold: 0.01,
+        failureThreshold: 0.005,
         failureThresholdType: 'percent',
         customDiffConfig: { threshold: 0.1 },
         customDiffDir: 'cypress/__visual_diff_errors__',
