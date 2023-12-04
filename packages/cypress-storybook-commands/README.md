@@ -65,7 +65,7 @@ addStoryBookCommands({
   postSnapshotFunc: () => {
     console.log('code after snapshot: reset elements, etc');
   },
-  snapshotSelector: '#root', // selector of element to use for snapshots,
+  snapshotSelector: '#storybook-root', // selector of element to use for snapshots, depends on version of sb
 });
 ```
 
