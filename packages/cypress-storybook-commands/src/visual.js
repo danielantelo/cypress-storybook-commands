@@ -9,7 +9,7 @@ module.exports = function addVisualSnapshotCommands({
 }) {
   if (registerSnapshotCommands) {
     const addMatchImageSnapshotCommand =
-      require('cypress-image-snapshot/command').addMatchImageSnapshotCommand;
+      require('@simonsmith/cypress-image-snapshot/command').addMatchImageSnapshotCommand;
     registerSnapshotCommands &&
       addMatchImageSnapshotCommand({
         failureThreshold: 0.005,

@@ -18,10 +18,10 @@ npm i cypress-storybook-commands --dev
 
 ### Setup
 
-You must include the `cypress-image-snapshot` plugin in `cypress/plugins/index.js` (create the folder and file if not there)
+You must include the `@simonsmith/cypress-image-snapshot` plugin in `cypress/plugins/index.js` (create the folder and file if not there)
 
 ```js
-const { addMatchImageSnapshotPlugin } = require('cypress-image-snapshot/plugin');
+const { addMatchImageSnapshotPlugin } = require('@simonsmith/cypress-image-snapshot/plugin');
 
 module.exports = (on, config) => {
   addMatchImageSnapshotPlugin(on, config);
@@ -72,7 +72,7 @@ addStoryBookCommands({
 If you need to tweak the image diff output folder or the threshold for failurers, set `registerSnapshotCommands: false` and also add the below in the same file:
 
 ```js
-import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command';
+import { addMatchImageSnapshotCommand } from '@simonsmith/cypress-image-snapshot/plugin/command';
 
 addMatchImageSnapshotCommand({
   failureThreshold: 0.005,
@@ -231,7 +231,7 @@ it('renders forms as expected', () => {
 If you are running the snapshots locally on a different OS to what you run on CI, you can minimise visual differences with the following in `cypress/plugins/index.js`
 
 ```js
-const { addMatchImageSnapshotPlugin } = require('cypress-image-snapshot/plugin');
+const { addMatchImageSnapshotPlugin } = require('@simonsmith/cypress-image-snapshot/plugin');
 const { addCrossBrowserVisualDiscrepanciesPlugin } = require('cypress-storybook-commands/src/plugins');
 
 module.exports = (on, config) => {
