@@ -20,13 +20,14 @@ module.exports = function addVisualSnapshotCommands({
       });
   }
 
-  Cypress.Commands.add('matchesStorybookScreenshot', (name, { wait = 500, selector } = {}) => {
+  Cypress.Commands.add('matchesStorybookScreenshot', (name, { wait = 500, selector, viewports } = {}) => {
     cy.get(selector)
       .children()
       .should('have.length.greaterThan', 0) // should wait until children of wanted container are loaded
       .then(() => {
-        Object.keys(viewportPresets).forEach((current) => {
-          const viewport = viewportPresets[current];
+        const viewportsObject = viewports || viewportPresets;
+        Object.keys(viewportsObject).forEach((current) => {
+          const viewport = viewportsObject[current];
           cy.viewport(...(Array.isArray(viewport) ? viewport : [viewport]))
             .wait(wait) // avoids capturing resize flickers or animations
             .get(selector)

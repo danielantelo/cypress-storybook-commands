@@ -75,7 +75,7 @@ If you need to tweak the image diff output folder or the threshold for failurers
 import { addMatchImageSnapshotCommand } from '@simonsmith/cypress-image-snapshot/plugin/command';
 
 addMatchImageSnapshotCommand({
-  failureThreshold: 0.005,
+  failureThreshold: 0.01,
   failureThresholdType: 'percent',
   customDiffConfig: { threshold: 0.1 },
   customDiffDir: 'cypress/__visual_diff_errors__',
@@ -128,6 +128,35 @@ cy.visit('/')
         'core-modal': () => cy.contains('Open Modal').click(),
       },
   });
+```
+
+It now also has a viewports option, that allow you to capture different viewports per test:
+
+```js
+context("Storybook", () => {
+  it("renders primitives and shared components as expected", () => {
+    cy.visit("/").runStorybookVisualRegression({
+      storiesToSkip: ["pages-", "spinner", "loading"],
+      viewports: {
+        component: "macbook-13", // don't need to test mobile or tablet for components
+      },
+    });
+  });
+
+  it("renders page as expected", () => {
+    cy.visit("/").runStorybookVisualRegression({
+      storiesToSkip: ["components-", "primitives-", "loading"],
+      viewports: {
+        // see https://docs.cypress.io/api/commands/viewport.html#Arguments
+        mobile: "iphone-5",
+        tablet: "ipad-2",
+        laptop: "macbook-15",
+      },
+    });
+  });
+});
+
+
 ```
 
 ### Functional tests
